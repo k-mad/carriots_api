@@ -9,6 +9,7 @@ class CarriotsApi:
         self.api_key = api_key
         self.device_id = device_id
         self.url = 'https://api.carriots.com/streams/'
+        self.status = None
 
 
     def get_time(self):
@@ -36,6 +37,7 @@ class CarriotsApi:
                     json=self.get_payload(data))
 
         print(str(r.status_code) + ": " + r.reason)
+        self.status = r.json()
         if(not r.ok):
             print(r.text)
 
@@ -47,4 +49,3 @@ if __name__ == "__main__":
 
     c = CarriotsApi(api_key, device_id)
     c.post(data)
-    sleep(15)
