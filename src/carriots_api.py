@@ -8,7 +8,7 @@ class CarriotsApi:
     def __init__(self, api_key, device_id):
         self.api_key = api_key
         self.device_id = device_id
-        self.url = 'https://api.carriots.com/streams/'
+        self.url = 'https://api.carriots.com/'
         self.status = None
 
 
@@ -31,8 +31,8 @@ class CarriotsApi:
         return payload
 
 
-    def post(self, data):
-        r = requests.post(self.url,
+    def post(self, data, service):
+        r = requests.post(self.url + service,
                     headers=self.get_headers(),
                     json=self.get_payload(data))
 
@@ -40,6 +40,13 @@ class CarriotsApi:
         self.status = r.json()
         if(not r.ok):
             print(r.text)
+
+    def send_stream(self, data):
+        self.post(data, 'streams/')
+
+
+    def send_status(self, data):
+        self.post(data, 'status/')
 
 
 if __name__ == "__main__":
